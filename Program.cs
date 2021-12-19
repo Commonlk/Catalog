@@ -10,13 +10,13 @@ using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ConfigurationManager Configuration = builder.Configuration;
+ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
 
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
-var mongoDbSettings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+var mongoDbSettings = configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
 
 builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
 {
@@ -46,9 +46,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
