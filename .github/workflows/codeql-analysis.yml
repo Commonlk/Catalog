@@ -69,7 +69,10 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       dotnet build
+       dotnet clean
+       dotnet restore
+       dotnet build --no-restore
+       dotnet test --no-build --verbosity normal
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
